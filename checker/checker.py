@@ -37,9 +37,11 @@ def _check_response(resp):
         exit(3)
 
     resp_json = resp.json()
-    if len(resp_json['results']) == 0:
+    if 'results' in resp_json and len(resp_json['results']) == 0:
         if 'answers' in resp_json and len(resp_json['answers']) != 0:
             return True
+        return False
+    if 'error' in resp_json and resp_json['error'] == 'search error':
         return False
 
     return True
